@@ -3,8 +3,7 @@
 		"port": 80,
 		"host": "http://localhost:80",
 		"admin": "demo@demo.cl",
-		"secret": "trascender-con-sso",
-		"cors": true
+		"secret": "trascender-con-sso"
 	},
 	"database": {
 		"url": "mongodb://127.0.0.1:27017",
@@ -22,13 +21,5 @@
 		"enabled": false,
 		"public": "",
 		"private": ""
-	},
-	"google": {
-		"auth": {
-			"enabled": false,
-			"clientId": "",
-			"clientSecret": "",
-			"redirect": ""
-		}
 	}
 }
