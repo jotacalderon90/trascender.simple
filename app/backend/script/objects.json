@@ -1,0 +1,224 @@
+[{
+		"name": "user",
+		"label": "Usuarios",
+		"schema": {
+			"email": "",
+			"password": ""
+		},
+		"service": {
+			"create": {
+				"method": "post",
+				"uri": "/api/user"
+			}
+		},
+		"output": {
+			"email": true,
+			"nickname": true,
+			"roles": true,
+			"notification": "",
+			"ip": ""
+		},
+		"sort": {
+			"email": 1
+		}
+	}, {
+		"name": "workflow",
+		"schema": {
+			"name": "",
+			"title": "",
+			"status": "",
+			"labels": ""
+		},
+		"doc": [{
+			"name": "ecommerce",
+			"title": "Solicitud de Compra",
+			"status": [
+				10,
+				20,
+				30,
+				40
+			],
+			"labels": [
+				"Creada",
+				"Cancelada",
+				"En Proceso",
+				"Finalizada"
+			],
+			"on": {
+				"10": {
+					"subject": "Nueva solicitud de compra",
+					"text": "Nueva solicitud de compra",
+					"title": "Se ha generado una nueva solicitud de compra con la siguiente información:",
+					"message": true,
+					"btnToAdmin": [{
+							"class": "success",
+							"style": "color: #B40404;",
+							"label": "Responder",
+							"value": 30
+						},
+						{
+							"class": "danger",
+							"style": "color: red;",
+							"label": "Cancelar",
+							"value": 20
+						}
+					],
+					"btnToClient": [{
+						"class": "danger",
+						"style": "color: red;",
+						"label": "Cancelar solicitud",
+						"value": 20
+					}]
+				},
+				"20": {
+					"subject": "Solicitud de compra cancelada",
+					"text": "Solicitud de compra cancelada",
+					"title": "La solicitud de compra ha sido cancelada"
+				},
+				"30": {
+					"subject": "Solicitud de compra en trámite",
+					"text": "Solicitud de compra en trámite",
+					"title": "La solicitud de compra está en trámite",
+					"message": true,
+					"btnToAdmin": [{
+							"class": "success",
+							"style": "color: #B40404;",
+							"label": "Responder",
+							"value": 30
+						},
+						{
+							"class": "success",
+							"style": "color: #B40404;",
+							"label": "Finalizar",
+							"value": 40
+						},
+						{
+							"class": "danger",
+							"style": "color: red;",
+							"label": "Cancelar",
+							"value": 20
+						}
+					],
+					"btnToClient": [{
+							"class": "success",
+							"style": "color: #B40404;",
+							"label": "Responder",
+							"value": 30
+						},
+						{
+							"class": "danger",
+							"style": "color: red;",
+							"label": "Cancelar solicitud",
+							"value": 20
+						}
+					]
+				},
+				"40": {
+					"subject": "Solicitud de compra finalizada",
+					"text": "Solicitud de compra finalizada",
+					"title": "La solicitud de compra ha sido finalizada"
+				}
+			}
+		}]
+	}, {
+		"name": "blog",
+		"label": "Blog",
+		"schema": {
+			"title": "",
+			"uri": "",
+			"img": "",
+			"thumb": "",
+			"images": [],
+			"resume": "",
+			"content": "",
+			"tag": [],
+			"author": "",
+			"created": ""
+		},
+		"output": {
+			"title": true,
+			"created": true,
+			"tag_main": true
+		},
+		"sort": {
+			"created": -1
+		},
+		"public": true
+	}, {
+		"name": "product",
+		"label": "Producto",
+		"schema": {
+			"title": "",
+			"uri": "",
+			"img": "",
+			"thumb": "",
+			"resume": "",
+			"content": "",
+			"tag": [],
+			"price": 0
+		},
+		"output": {
+			"title": true,
+			"price": true,
+			"tag": true
+		},
+		"sort": {
+			"title": 1
+		},
+		"public": true
+	}, {
+		"name": "ecommerce",
+		"label": "Orden de Compra",
+		"schema": {
+			"ip": "",
+			"email": "",
+			"phone": "",
+			"message": "",
+			"product": [],
+			"total": 0,
+			"status": "",
+			"created": ""
+		},
+		"output": {
+			"email": true,
+			"total": true,
+			"status": true
+		},
+		"sort": {
+			"created": -1
+		}
+	},
+	{
+		"name": "comment",
+		"schema": {
+			"comment": "",
+			"author": "",
+			"type": "",
+			"parent": "",
+			"created": ""
+		}
+	}, {
+		"name": "message",
+		"schema": {
+			"subject": "",
+			"email": "",
+			"message": ""
+		}
+	}, {
+		"name": "wall",
+		"schema": {
+			"author": "",
+			"created": "",
+			"content": "",
+			"link": ""
+		},
+		"sort": {
+			"created": -1
+		}
+	}, {
+		"name": "user_active",
+		"schema": {
+			"email": ""
+		}
+	}
+]
