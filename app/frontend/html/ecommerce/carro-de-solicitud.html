@@ -1,0 +1,137 @@
+<!--use:_views/m.main-->
+
+<!--define:title-->
+Carro de solicitud
+<!--/define:title-->
+
+<!--define:css-->
+	<link rel="stylesheet" href="css/ecommerce.css" />
+<!--/define:css-->
+
+<!--define:main-->
+	<div  id="ecommerce" data-ng-controller="ecommerceCtrl as ctrl">
+		<div class="page-header">
+			<h1>
+				<a href="/">Carro de cotización</a>
+			</h1>
+		</div>
+		<div>
+			<div class="alert alert-warning" data-ng-show="ctrl.ecommerce.newdoc.product.length==0">
+				<strong>Carro vacío</strong> aún no has seleccionado nada de nuestro catálogo<br>
+				<a href="/product">ir al catálogo de productos</a>
+			</div>
+			<div data-ng-show="ctrl.ecommerce.newdoc.product.length>0">
+				<div class="visible-xs">
+					<article data-ng-repeat="row in ctrl.ecommerce.newdoc.product">
+						<img data-ng-src="{{row.img}}" height="200" alt="{{row.title}}"/>
+						<h2>{{row.title}}</h2>
+						<p class="visible-xs"><strong class="text-success">${{row.price|number}}</strong>.</p>
+						<div class="input-group input-group-sm"  style="width:30%;">
+							<span class="input-group-btn">
+								<button class="btn btn-danger" type="button" data-ng-click="ctrl.ecommerce.remove($index)" data-ng-show="row.cant==1">
+									<span class="fa fa-trash"></span>
+								</button>
+							</span>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" data-ng-click="row.cant=row.cant-1" data-ng-show="row.cant>1">
+									<span class="fa fa-minus"></span>
+								</button>
+							</span>
+							<input type="text" class="form-control" data-ng-model="row.cant" size="1" maxlength="3" data-ng-change="ctrl.ecommerce.updateCart()"/>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" data-ng-click="row.cant=row.cant+1">
+									<span class="fa fa-plus"></span>
+								</button>
+							</span>
+						</div>
+					</article>
+					<br>
+					<div class="text-success" style="margin-left:52%;">Total<br><strong>${{ctrl.ecommerce.calculatetotal()|number}}</strong></div>
+				</div>
+				<table class="table hidden-xs">
+					<thead>
+						<tr>
+							<th></th>
+							<th class="text-left">Producto</th>
+							<th class="text-right">Precio</th>
+							<th class="text-center">Cantidad</th>
+							<th class="text-right">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="row in ctrl.ecommerce.newdoc.product">
+							<td><img data-ng-src="{{row.img}}" style="height:100px"/></td>
+							<td>{{row.title}}</td>
+							<td class="text-right">${{row.price|number}}</td>
+							<td>
+								<div class="input-group">
+									<span class="input-group-btn">
+										<button class="btn btn-danger" type="button" data-ng-click="ctrl.ecommerce.remove($index)" data-ng-show="row.cant==1">
+											<span class="fa fa-trash"></span>
+										</button>
+									</span>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" data-ng-click="row.cant=row.cant-1" data-ng-show="row.cant>1">
+											<span class="fa fa-minus"></span>
+										</button>
+									</span>
+									<input type="text" class="form-control" data-ng-model="row.cant" size="1" maxlength="3" data-ng-change="ctrl.ecommerce.updateCart()"/>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" data-ng-click="row.cant=row.cant+1">
+											<span class="fa fa-plus"></span>
+										</button>
+									</span>
+								</div>
+							</td>
+							<td class="text-right">{{ctrl.ecommerce.calculaterow(row)|number}}</td>
+						</tr>
+						<tr>
+							<th colspan="3"></th>
+							<th class="text-right">Total</th>
+							<td class="text-right">{{ctrl.ecommerce.calculatetotal()|number}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="col-md-6 col-md-offset-3">
+					<div class="form-group">
+						<label>Email</label>
+						<input type="email" class="form-control" data-ng-model="ctrl.ecommerce.newdoc.email">
+					</div>
+					<div class="form-group">
+						<label>Mensaje</label>
+						<textarea class="form-control" data-ng-model="ctrl.ecommerce.newdoc.message" rows="5"></textarea>
+					</div>
+					<!--if:doc.config.recaptcha.enabled-->
+		            <div class="g-recaptcha" data-sitekey="{{data:doc.config.recaptcha.public}}" data-tr="" data-label="Footer - Recaptcha" data-dinamyc="data-sitekey" >
+		            </div>
+					<!--/if-->
+					<button class="btn btn-lg btn-block btn-success" data-ng-click="ctrl.ecommerce.create()">
+						<span class="fa fa-check"></span>
+						<span>Enviar mensaje</span>
+					</button>
+					<br>
+					  <div class="alert" data-ng-repeat="doc in ctrl.ecommerce.log" data-ng-show="doc.show" data-ng-class="doc.class" >
+						<p>
+						  <span data-ng-click="doc.show=!doc.show" class="glyphicon glyphicon-remove pull-right" >
+						  </span>
+						  <i class="fa fa-spinner fa-spin" aria-hidden="true" data-ng-show="doc.spinner" >
+						  </i>
+						  <span data-ng-click="doc.showError=!doc.showError">{{doc.msg}}</span>
+						  <br />
+						  <small data-ng-show="doc.showError">
+							<span data-ng-repeat="(key, value) in doc.xhttp.json.error">
+								{{key}}: {{value}}
+								<br />
+							</span>
+						  </small>
+						</p>
+					  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--/define:main-->
+
+<!--define:script-->
+	<script src="js/ecommerce.js"></script>
+<!--/define:script-->

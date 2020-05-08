@@ -1,0 +1,58 @@
+<!--use:_views/m.main-->
+
+<!--define:title-->
+{{data:doc.title}}
+<!--/define:title-->
+
+<!--define:css-->
+<link rel="stylesheet" href="css/product.css" />
+<!--/define:css-->
+
+<!--define:main-->
+<div id="product" data-ng-controller="productCtrl as ctrl">
+	<div class="page-header">
+		<div class="pull-right btn-group">
+			<button type="button" class="btn btn-default btn-xs">Tags</button>
+			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="caret"></span>
+				<span class="sr-only">Toggle Dropdown</span>
+			</button>
+			<ul class="dropdown-menu">
+				<li data-ng-repeat="row in ctrl.collection.tag">
+					<a data-ng-href="/product/categoria/{{row}}">{{row}}</a>
+				</li>
+			</ul>
+		</div>
+		<h1>
+			<a href="/product">Productos</a>
+			<!--if:doc.title!='Product'-->
+				<small>{{data:doc.title}}</small>
+			<!--/if-->
+		</h1>
+	</div>
+	<div class="row" >
+		<div class="col-md-4" data-ng-show="ctrl.user.isAdmin()">
+			<a class="btn btn-primary btn-in-collection" href="/product/new">NUEVO <i class="fa fa-plus"></i></a>
+		</div>
+		<div class="col-md-4" data-ng-repeat="row in ctrl.collection.coll">
+			<!--include:product/article-->
+		</div>
+		<div class="col-md-4" data-ng-show="ctrl.collection.obtained < ctrl.collection.cant">
+			<button class="btn btn-primary btn-in-collection" data-ng-click="ctrl.collection.getCollection()" >CARGAR <i class="fa fa-plus"></i></button>
+		</div>
+	</div>
+</div>
+<a href="/ecommerce/carro-de-solicitud" class="link-bottom" title="Carrito de cotización">
+	<i class="fa fa-shopping-cart"></i>
+</a>
+<!--/define:main-->
+
+<!--define:script-->
+	<script type="text/javascript" src="bower_components/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript">
+		var _collection = {{data: JSON.stringify(doc.rows)}};
+		var instances = {product: ["collection"]};
+	</script>
+	<script type="text/javascript" src="js/wall.js"></script>
+	<script type="text/javascript" src="js/product.js"></script>
+<!--/define:script-->

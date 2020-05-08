@@ -1,0 +1,79 @@
+<!--use:_views/m.main-->
+
+<!--define:meta-->
+
+	<meta name="keywords" content="{{data:doc.row.tag}}" />
+	<meta name="description" content="{{data:doc.row.resume}}" />
+	<meta name="Author" content="{{data:doc.row.author}}" />
+	
+	<meta property="og:title" content="{{data:doc.row.title}}"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:url" content="{{data:doc.row.uri}}"/>
+	<meta property="og:image" content="{{data:doc.row.img}}"/>
+	<meta property="og:description" content="{{data:doc.row.resume}}"/>
+	<meta property="og:site_name" content="{{data:doc.row.author}}"/>
+	
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@{{data:doc.row.author}}" />
+	<meta name="twitter:title" content="{{data:doc.row.title}}" />
+	<meta name="twitter:description" content="{{data:doc.row.resume}}" />
+	<meta name="twitter:image" content="{{data:doc.row.img}}" />
+	<meta name="twitter:url" content="{{data:doc.row.uri}}" />
+	<meta name="twitter:creator" content="@{{data:doc.row.author}}" />
+<!--/define:meta-->
+
+<!--define:title-->
+{{data:doc.row.title}}
+<!--/define:title-->
+
+<!--define:css-->
+<link rel="stylesheet" href="css/product.css" media="all"/>
+<!--/define:css-->
+
+<!--define:main-->
+<section id="product" data-ng-controller="productCtrl as ctrl">
+	<div class="page-header">
+		<a class="pull-right" href="/product/edit/{{data:doc.row._id}}" data-ng-show="ctrl.user.isAdmin()">
+			<i class="fa fa-pencil"></i>
+		</a>
+		<h1>
+			<a href="/product">Productos</a>
+			<!--if:doc.row.title!='Product'-->
+				<small>{{data:doc.row.title}}</small>
+			<!--/if-->
+		</h1>
+	</div>
+	<div>
+		<img class="img-main" data-ng-src="{{data:doc.row.img}}" alt="{{data:doc.row.resume}}" title="{{data:doc.row.resume}}" />
+		<p class="resume"><strong>{{data:doc.row.resume}}</strong></p>
+		{{data:doc.row.content}}
+		<br/>
+		<br/>
+		
+		<p class="btn btn-xs btn-primary">$<span data-number>{{data:doc.row.price}}</span></p>
+		<button class="btn btn-xs btn-info" data-ng-click="ctrl.relation.updateCart()" title="cotizar">
+			<span class="fa fa-shopping-cart"></span> Agregar al carro
+		</button>
+		
+		<!--repeat:doc.row.tag-->
+		<a class="btn btn-xs btn-success" href="/product/categoria/{{data:doc.row.tag[index]}}" data-tr-cache="{{data:doc.row.tag[index]}}">{{data:doc.row.tag[index]}}</a>
+		<!--/repeat:doc.row.tag-->
+		<a href="javascript:history.back()" class="btn btn-default btn-xs">volver</a>
+		<!--include:product/related-->
+	</div>
+	<a href="/ecommerce/carro-de-solicitud" class="link-bottom">
+		<i class="fa fa-shopping-cart"></i>
+	</a>
+</section>
+<!--include:_views/i.comment-->
+
+<!--/define:main-->
+
+<!--define:script-->
+	<script type="text/javascript">
+		var _document = {{data: JSON.stringify(doc.row)}};
+		var instances = {product: ["relation"]};
+	</script>
+	<script type="text/javascript" src="js/product.js"></script>
+	<script type="text/javascript" src="js/comment.js"></script>
+<!--/define:script-->

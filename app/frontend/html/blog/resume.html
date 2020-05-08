@@ -1,0 +1,9 @@
+<section id="blog" data-ng-controller="blogCtrl as ctrl">
+	<p>Últimas publicaciones</p>
+	<div class="row">
+		<div class="col-md-4" data-ng-repeat="row in ctrl.resume.coll">
+			<!--include:blog/article-->
+		</div>
+	</div>
+	<p><a href="/blog">ver más</a></p>
+</section>

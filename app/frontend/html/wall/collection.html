@@ -1,0 +1,66 @@
+<!--use:_views/m.main-->
+
+<!--define:title-->
+{{data:doc.title}}
+<!--/define:title-->
+
+<!--define:main-->
+	<div data-ng-controller="wallCtrl as ctrl">
+		<div class="page-header">
+			<a class="pull-right" data-toggle="modal" data-target="#mdAdmin" data-ng-show="ctrl.user.doc.roles.indexOf('user')>-1" data-ng-click="ctrl.document.new()">
+				<i class="fa fa-plus"></i>
+			</a>
+			<h1>
+				<a href="/wall">Muro</a>
+				<!--if:doc.title!='Muro'-->
+				<small>{{data:doc.title}}</small>
+				<!--/if-->
+			</h1>
+		</div>
+		<div id="dv-wall" class="row" >
+			<div class="col-md-3 sticky col-index-2">
+				<a data-ng-repeat="row in ctrl.collection.tag" data-ng-href="/wall/categoria/{{row}}" class="label label-default pull-right hidden-xs" style="margin: 5px;">{{row}}</a>
+				<div class="visible-xs pull-right btn-group btn-xs visible-xs-tags">
+					<button type="button" class="btn btn-default">Tags</button>
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu">
+						<li data-ng-repeat="row in ctrl.collection.tag">
+							<a data-ng-href="/wall/categoria/{{row}}">{{row}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-9 col-index-1">
+				<ul class="list-group">
+					<li class="list-group-item" data-ng-repeat="row in ctrl.collection.coll">
+						<img data-ng-src="{{ctrl.collection.users[row.author].thumb}}" title="author" height="40" class="img-circle" style="border: 1px dotted grey;vertical-align: top"/>
+						<strong>{{ctrl.collection.users[row.author].nickname}}</strong>
+						<small title="{{row.dateDisplay}}">{{row.dateFrom}}</small>
+						<br>
+						<br>
+						<div data-html="{{row.content}}" class="contentHTML"></div>
+						<a class="label label-success" href="{{row.url}}" data-ng-show="row.url!=undefined && row.url!=''">Ir al documento</a>
+						<a class="label label-danger" data-ng-show="ctrl.user.isAdmin()" data-ng-click="ctrl.document.delete(row._id)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</li>
+					<li data-ng-show="ctrl.collection.obtained < ctrl.collection.cant" class="list-group-item text-center">
+						<button class="btn btn-default btn-block" data-ng-click="ctrl.collection.getCollection()">cargar más</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--include:wall/admin-->
+	</div>
+<!--/define:main-->
+
+<!--define:script-->
+	<script type="text/javascript" src="bower_components/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript">
+		var instances = {wall: ["collection","document"]};
+	</script>
+	<script type="text/javascript" src="js/wall.js"></script>
+<!--/define:script-->

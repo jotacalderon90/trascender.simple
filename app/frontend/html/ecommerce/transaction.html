@@ -1,0 +1,98 @@
+<!--use:_views/m.main-->
+
+<!--define:title-->
+{{data:doc.title}}
+<!--/define:title-->
+
+<!--define:css-->
+	<link rel="stylesheet" href="css/ecommerce.css" />
+<!--/define:css-->
+
+<!--define:main-->
+<div>
+	<div class="page-header">
+		<h1>{{data:doc.title}}</h1>
+	</div>
+	<div class="row" >
+		<form method="POST" action="{{data:doc.action}}">
+			<table class="table">
+				<thead>
+					<tr>
+						<th colspan="5">
+							<h2></h2>
+						</th>
+					</tr>
+					<tr>
+						<th></th>
+						<th>Producto</th>
+						<th>Precio</th>
+						<th>Cantidad</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--repeat:doc.document.product-->
+					<tr>
+						<td><img src="{{data:doc.document.product[index].img}}" height="75"/></td>
+						<td>{{data:doc.document.product[index].title}}</td>
+						<td class="text-right">$<span data-number>{{data:doc.document.product[index].price}}</span></td>
+						<td class="text-right"><span data-number>{{data:doc.document.product[index].cant}}</span></td>
+						<td class="text-right"><span data-number>{{data:doc.document.product[index].total}}</span></td>
+					</tr>
+					<!--/repeat:doc.document.product-->
+					<tr>
+						<th colspan="3"></th>
+						<th class="text-right">Total</th>
+						<td class="text-right"><span data-number>{{data:doc.document.total}}</span></td>
+					</tr>
+					<tr>
+						<th>Correo:</th>
+						<td colspan="4">
+							{{data:doc.document.email}}
+						</td>
+					</tr>
+					<!--if:doc.phone-->
+					<tr>
+						<th>Fono:</th>
+						<td colspan="4">
+							{{data:doc.document.phone}}
+						</td>
+							</tr>
+					<tr>
+					<!--/if-->
+						<th>Mensajes</th>
+						<td colspan="4">{{data:doc.document.message}}</td>
+					</tr>
+					<!--if:doc.message==true-->
+					<tr>
+						<td></td>
+						<td colspan="4">
+							<textarea class="form-control" name="message" rows="5" placeholder="Ingrese comentario"></textarea>
+						</td>
+					</tr>
+					<!--/if-->
+					<!--if:doc.document.status!=20 && doc.document.status!=40-->
+					<tr>
+						<td></td>
+						<td colspan="4">
+							<div class="g-recaptcha" data-sitekey="{{data:doc.config.recaptcha.public}}" data-tr="" data-label="Footer - Recaptcha" data-dinamyc="data-sitekey" ></div>
+						</td>
+					</tr>
+					<!--/if-->
+					<tr>
+						<td class="text-center" colspan="5">
+							<br>
+							<br>
+							<!--repeat:doc.btn-->
+							<button class="btn btn-lg btn-{{data:doc.btn[index].class}}" type="submit" name="action" value="{{data:doc.btn[index].value}}">
+								<span>{{data:doc.btn[index].label}}</span>
+							</button>
+							<!--/repeat:doc.btn-->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>		
+	</div>
+</div>
+<!--/define:main-->

@@ -1,0 +1,72 @@
+<!--use:_views/m.main-->
+
+<!--define:meta-->
+	
+<meta name="keywords" content="{{data:doc.row.tag}}" />
+<meta name="description" content="{{data:doc.row.resume}}" />
+<meta name="Author" content="{{data:doc.config.properties.admin}}" />
+
+<meta property="og:title" content="{{data:doc.row.title}}"/>
+<meta property="og:description" content="{{data:doc.row.resume}}"/>
+<meta property="og:image" content="{{data:doc.row.img}}"/>
+<meta property="og:url" content="{{data:doc.row.uri}}"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="{{data:doc.config.public.title}}"/>
+
+<meta name="twitter:creator" content="@{{data:doc.config.properties.admin}}" />
+<meta name="twitter:title" content="{{data:doc.row.title}}" />
+<meta name="twitter:description" content="{{data:doc.row.resume}}" />
+<meta name="twitter:image" content="{{data:doc.row.img}}" />
+<meta name="twitter:url" content="{{data:doc.row.uri}}" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@{{data:doc.config.public.twitter}}" />
+
+<!--/define:meta-->
+
+<!--define:title-->
+{{data:doc.row.title}}
+<!--/define:title-->
+
+<!--define:css-->
+<link rel="stylesheet" href="css/blog.css" media="all"/> 
+<!--/define:css-->
+
+<!--define:main-->
+<section id="blog" data-ng-controller="blogCtrl as ctrl">
+	<div class="page-header">
+		<a class="pull-right" href="/blog/edit/{{data:doc.row._id}}" data-ng-show="ctrl.user.isAdmin()">
+			<i class="fa fa-pencil"></i>
+		</a>
+		<h1>
+			<a href="/blog">Blog</a>
+			<!--if:doc.row.title!='Blog'-->
+			<small>{{data:doc.row.title}}</small>
+			<!--/if-->
+		</h1>
+		<small class="asDate"></small>
+	</div>
+	<div>
+		<img class="img-main" data-ng-src="{{data:doc.row.img}}" alt="{{data:doc.row.resume}}" title="{{data:doc.row.resume}}" />
+		<p class="resume"><strong>{{data:doc.row.resume}}</strong></p>
+		{{data:doc.row.content}}
+		<br/>
+		<br/>
+		<!--repeat:doc.row.tag-->
+		<a class="btn btn-xs btn-success" href="/blog/categoria/{{data:doc.row.tag[index]}}" data-tr-cache="{{data:doc.row.tag[index]}}">{{data:doc.row.tag[index]}}</a>
+		<!--/repeat:doc.row.tag-->
+		<a href="javascript:history.back()" class="btn btn-default btn-xs">volver</a>
+		<!--include:blog/related-->
+	</div>
+</section>
+<!--include:_views/i.comment-->
+
+<!--/define:main-->
+
+<!--define:script-->
+	<script type="text/javascript">
+		var _document = {{data: JSON.stringify(doc.row)}};
+		var instances = {blog: ["relation"]}
+	</script>
+	<script type="text/javascript" src="js/blog.js"></script>
+	<script type="text/javascript" src="js/comment.js"></script>
+<!--/define:script-->

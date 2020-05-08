@@ -1,0 +1,9 @@
+<section id="product" data-ng-controller="productCtrl as ctrl">
+	<p>Catálogo de productos y servicios</p>
+	<div class="row">
+		<div class="col-md-4" data-ng-repeat="row in ctrl.resume.coll">
+			<!--include:product/article-->
+		</div>
+	</div>
+	<p><a href="/product">ver más</a></p>
+</section>

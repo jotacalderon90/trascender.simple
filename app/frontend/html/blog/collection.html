@@ -1,0 +1,56 @@
+<!--use:_views/m.main-->
+
+<!--define:title-->
+{{data:doc.title}}
+<!--/define:title-->
+
+<!--define:css-->
+<link rel="stylesheet" href="css/blog.css" media="all"/> 
+<!--/define:css-->
+
+<!--define:main-->
+<section id="blog" data-ng-controller="blogCtrl as ctrl">
+	<div class="page-header">
+		<div class="pull-right btn-group">
+			<button type="button" class="btn btn-default btn-xs">Tags</button>
+			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="caret"></span>
+				<span class="sr-only">Toggle Dropdown</span>
+			</button>
+			<ul class="dropdown-menu">
+				<li data-ng-repeat="row in ctrl.collection.tag">
+					<a data-ng-href="/blog/categoria/{{row}}">{{row}}</a>
+				</li>
+			</ul>
+			<a href="/blog/info" class="btn btn-link btn-xs">
+				<i class="fa fa-question-circle-o" style="font-size:20px;"></i>
+			</a>
+		</div>
+		<h1>
+			<a href="/blog">Blog</a>
+			<!--if:doc.title!='Blog'-->
+				<small>{{data:doc.title}}</small>
+			<!--/if-->
+		</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-4" data-ng-show="ctrl.user.isAdmin()">
+			<a class="btn btn-primary btn-in-collection" href="/blog/new">NUEVO <i class="fa fa-plus"></i></a>
+		</div>
+		<div class="col-md-4" data-ng-repeat="row in ctrl.collection.coll">
+			<!--include:blog/article-->
+		</div>
+		<div class="col-md-4" data-ng-show="ctrl.collection.obtained < ctrl.collection.cant">
+			<button class="btn btn-primary btn-in-collection" data-ng-click="ctrl.collection.getCollection()" >CARGAR <i class="fa fa-plus"></i></button>
+		</div>
+	</div>
+</section>
+<!--/define:main-->
+
+<!--define:script-->
+	<script type="text/javascript">
+		var _collection = {{data: JSON.stringify(doc.rows)}};
+		var instances = {blog: ["collection"]};
+	</script>
+	<script type="text/javascript" src="js/blog.js"></script>
+<!--/define:script-->

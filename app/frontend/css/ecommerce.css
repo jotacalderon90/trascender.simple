@@ -1,0 +1,29 @@
+#ecommerce article{
+	height: 100px;
+	padding-right: 0px;
+	padding-left: 0px;
+	overflow:hidden;
+}
+#ecommerce p{
+	text-align: left;
+	font-size: 16px;
+	padding: 10px;
+	background: inherit;
+	opacity: 1;
+}
+#ecommerce article img{
+	width: 50%;
+	height: 100px;
+	float: left;
+	margin-right: 10px;
+}
+#ecommerce article h2{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-size: 14px;
+	text-align:left;
+}
+#ecommerce article p{
+	font-size: 12px;
+	padding: 0px;
+}

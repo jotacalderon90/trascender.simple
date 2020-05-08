@@ -1,0 +1,53 @@
+#blog article{
+	height: 350px;
+	min-height: 350px;
+	max-height: 350px;
+	overflow: hidden;
+	padding: 10px;
+	text-align: center;
+}
+#blog article img{
+	height: 200px; 
+}
+#blog article h2{
+	font-size: 18px;
+}
+#blog .btn-in-collection{
+	width: 100%;
+	height: 200px; 
+	margin-top: 10px;
+	line-height: 180px;
+}
+#blog .img-main{
+	width: 50%;
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+#blog .resume{
+	font-size: 18px;
+}
+@media (max-width: 768px) {
+	#blog article{
+		height: 100px;
+		min-height: 100px;
+		max-height: 100px;
+		text-align: justify;
+	}
+	#blog article img{
+		width: 50%;
+		height: 100px;
+		float: left;
+		margin-right: 10px;
+	}
+	#blog article h2{
+		margin-top: 0px;
+		margin-bottom: 0px;
+		font-size: 14px;
+	}
+	#blog .btn-in-collection{
+		width: 50%;
+		height: 100px;
+		line-height: 100px;
+	}
+}

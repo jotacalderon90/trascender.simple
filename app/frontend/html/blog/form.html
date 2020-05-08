@@ -1,0 +1,96 @@
+<!--use:_views/m.main-->
+
+<!--define:title-->
+{{data:(doc.row)?doc.row.title:"NUEVO"}}
+<!--/define:title-->
+
+<!--define:css-->
+<link rel="stylesheet" href="css/blog.css" media="all"/> 
+<!--/define:css-->
+
+<!--define:main-->
+<section id="blog" data-ng-controller="blogCtrl as ctrl">
+	<div class="page-header">
+		<h1>
+			<a href="/blog">Blog</a>
+			<small>{{data:(doc.row)?doc.row.title:"NUEVO"}}</small>
+		</h1>
+	</div>
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="form-group">
+					<label>Título</label>
+					<input type="text" class="form-control" placeholder="Título" data-ng-model="ctrl.document.getDoc().title" data-ng-blur="ctrl.document.titleOnBlur()" data-ng-disabled="ctrl.document.isReadMode()">
+				</div>
+				<div class="form-group">
+					<label>URL</label>
+					<input type="text" class="form-control" placeholder="URL" data-ng-model="ctrl.document.getDoc().uri" data-ng-disabled="ctrl.document.isReadMode()">
+				</div>
+				<div class="form-group" data-ng-show="!ctrl.document.isCreateMode()">
+					<label>Imagen</label>
+					<br>
+					<img data-ng-src="{{ctrl.document.getDoc().img}}"  height="200"/>
+					<form method="post" action="{{ctrl.document.getPostImage()}}" data-ng-show="ctrl.document.isEditMode()" enctype="multipart/form-data">
+						<input type="file" name="file"/>
+						<button type="submit" class="btn btn-primary">subir</button>
+					</form>
+				</div>
+				<div class="form-group">
+					<label>Resumen</label>
+					<input type="text" class="form-control" placeholder="Resumen" data-ng-model="ctrl.document.getDoc().resume" data-ng-disabled="ctrl.document.isReadMode()">
+				</div>
+				<div class="form-group">
+					<label>Contenido</label>
+					<input type="text" class="form-control" id="input_content" placeholder="Contenido" data-ng-disabled="ctrl.document.isReadMode()">
+				</div>
+				<div class="form-group">
+					<label>Tags</label>
+					<input type="text" class="form-control input_tag" placeholder="Agregar tag" data-ng-model="ctrl.document.getDoc().tagbk" data-ng-disabled="ctrl.document.isReadMode()" data-ng-keypress="ctrl.document.addTag($event)">
+					<ul class="list-unstyled list-inline">
+						<li data-ng-repeat="row in ctrl.document.getDoc().tag">
+							<span class="label label-default">
+								{{row}} 
+								<i class="fa fa-close text-danger" data-ng-click="ctrl.document.removeTag($index)" data-ng-show="!ctrl.document.isReadMode()"></i>
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div class="form-group">
+					<label>Tag Principal</label>
+					<select class="form-control" data-ng-model="ctrl.document.getDoc().tag_main" data-ng-disabled="ctrl.document.isReadMode()">
+						<option data-ng-repeat="row in ctrl.document.getDoc().tag">{{row}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-info" href="/blog/{{data:doc.row.uri}}" data-ng-show="!ctrl.document.isCreateMode()">
+					<i class="fa fa-eye"></i>
+				</a>
+				<button type="button" class="btn btn-primary" data-ng-click="ctrl.document.create()" data-ng-show="ctrl.document.isCreateMode()" title="ctrl.document.createLog.msg">
+					<i class="fa fa-check" data-ng-show="!ctrl.document.createLog.spinner"></i>
+					<i class="fa fa-spinner fa-spin" data-ng-show="ctrl.document.createLog.spinner"></i>
+				</button>
+				<button type="button" class="btn btn-danger" data-ng-click="ctrl.document.delete()" data-ng-show="ctrl.document.isEditMode()" title="ctrl.document.deleteLog.msg">
+					<i class="fa fa-trash" data-ng-show="!ctrl.document.deleteLog.spinner"></i>
+					<i class="fa fa-spinner fa-spin" data-ng-show="ctrl.document.deleteLog.spinner"></i>
+				</button>
+				<button type="button" class="btn btn-primary" data-ng-click="ctrl.document.edit()" data-ng-show="ctrl.document.isReadMode()">
+					<i class="fa fa-pencil"></i>
+				</button>
+				<button type="button" class="btn btn-success" data-ng-click="ctrl.document.update()" data-ng-show="ctrl.document.isEditMode()" title="ctrl.document.updateLog.msg">
+					<i class="fa fa-check" data-ng-show="!ctrl.document.updateLog.spinner"></i>
+					<i class="fa fa-spinner fa-spin" data-ng-show="ctrl.document.updateLog.spinner"></i>
+				</button>
+			</div>
+		</div>
+</section>
+<!--/define:main-->
+
+<!--define:script-->
+	<script type="text/javascript" src="bower_components/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript">
+		var _document = {{data: JSON.stringify(doc.row)}};
+		var instances = {blog: ["document"]}
+	</script>
+	<script type="text/javascript" src="js/blog.js"></script>
+<!--/define:script-->

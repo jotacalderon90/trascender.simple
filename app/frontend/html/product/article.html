@@ -1,0 +1,10 @@
+<article>
+	<a data-ng-href="/product/{{row.uri}}">
+		<img data-ng-src="{{row.thumb}}" alt="{{row.title}}"/>
+		<h2>{{row.title}}</h2>
+		<small class="text-success">${{row.price|number}}</small>
+	</a>
+	<a href="/product/edit/{{row._id}}" data-ng-show="ctrl.user.isAdmin()">
+		<i class="fa fa-pencil"></i>
+	</a>
+</article>
