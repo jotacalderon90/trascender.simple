@@ -221,7 +221,8 @@ self.prototype.upload = async function(req,res){
 		}
 		let d = "/media/img/blog/" + req.params.id + ".jpg";
 		await this.helper.upload_process(req.files.file, this.dir + "/app/frontend" + d);
-		await this.mongodb.updateOne("blog",req.params.id,{$set: {img: d, thumb: d}});
+		
+		await this.mongodb.updateOne("blog",req.params.id,{$set: {img: this.config.properties.host + d, thumb: this.config.properties.host + d}});
 		
 		res.redirect("/blog/edit/" + req.params.id);
 	}catch(e){

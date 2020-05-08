@@ -6,7 +6,9 @@ let self = function(a){
 	this.dir = a.dir;
 	this.config = a.config;
 	this.mongodb = a.mongodb;
-	
+	this.helper = a.helper;
+	this.microservice = a.microservice;
+		
 	this.image_folder = this.dir + "/app/frontend/media/img/product/";
 	if (!fs.existsSync(this.image_folder)) {
 		fs.mkdirSync(this.image_folder);
@@ -224,27 +226,14 @@ self.prototype.upload = async function(req,res){
 			throw("no file");
 		}
 		let d = "/media/img/product/" + req.params.id + ".jpg";
-		await this.upload_process(req.files.file, this.dir + "/app/frontend" + d);
-		await this.mongodb.updateOne("product",req.params.id,{$set: {img: d, thumb: d}});
+		await this.helper.upload_process(req.files.file, this.dir + "/app/frontend" + d);
+		
+		await this.mongodb.updateOne("product",req.params.id,{$set: {img: this.config.properties.host + d, thumb: this.config.properties.host + d}});
 		
 		res.redirect("/product/edit/" + req.params.id);
 	}catch(e){
 		res.status(500).render("message",{title: "Error en el Servidor", message: e.toString(), error: 500, class: "danger", config: this.config});
 	}
-}
-
-
-
-self.prototype.upload_process = function(file,path){
-	return new Promise(function(resolve,reject){
-		file.mv(path, function(error) {
-			if (error){
-				return reject(error);
-			}else{
-				resolve(true);
-			}
-		});
-	});
 }
 
 
