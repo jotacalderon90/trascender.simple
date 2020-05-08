@@ -1,9 +1,16 @@
 "use strict";
 
+const fs = require("fs");
+
 let self = function(a){
 	this.dir = a.dir;
 	this.config = a.config;
 	this.mongodb = a.mongodb;
+	
+	this.image_folder = this.dir + "/app/frontend/media/img/product/";
+	if (!fs.existsSync(this.image_folder)) {
+		fs.mkdirSync(this.image_folder);
+	}
 }
 
 
