@@ -106,7 +106,7 @@ self.prototype.updateOne = function(collection,id,document){
 	delete document._id;
 	return new Promise((resolve,reject)=>{
 		if(this.client && this.client.isConnected()){
-			this.db.collection(collection).replaceOne({_id: new mongodb.ObjectID(id)}, document, function(error, data) {
+			this.db.collection(collection).updateOne({_id: new mongodb.ObjectID(id)}, document, function(error, data) {
 				if (error){
 					return reject(error);
 				}else{
